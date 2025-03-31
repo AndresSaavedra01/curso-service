@@ -2,9 +2,11 @@ package co.edu.uceva.cursoservice.model.services;
 
 import co.edu.uceva.cursoservice.model.entities.Curso;
 import co.edu.uceva.cursoservice.model.repositories.ICursoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CursoServiceImpl implements ICursoService{
 
     ICursoRepository cursoRepository;
