@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/curso-service")
+@RequestMapping("/api/v1/curso-service")
 public class CursoRestController {
 
     private ICursoService cursoService;
@@ -17,17 +17,17 @@ public class CursoRestController {
     public CursoRestController(ICursoService cursoService) {this.cursoService = cursoService;}
 
     @GetMapping("/cursos")
-    public List<Curso> getAllCursos() {return cursoService.findAll();}
+    public List<Curso> getCursos() {return cursoService.findAll();}
 
     @PostMapping("/cursos")
-    public Curso saveCurso(@RequestBody Curso curso) {return cursoService.save(curso);}
+    public Curso save(@RequestBody Curso curso) {return cursoService.save(curso);}
 
     @DeleteMapping("/cursos")
-    public void deleteCurso(@RequestBody Curso curso) {cursoService.delete(curso);}
+    public void delete(@RequestBody Curso curso) {cursoService.delete(curso);}
 
-    @PutMapping("/productos")
-    public Curso updateCurso(@RequestBody Curso curso) {return cursoService.update(curso);}
+    @PutMapping("/cursos")
+    public Curso update(@RequestBody Curso curso) {return cursoService.update(curso);}
 
-    @GetMapping("/productos/{id}")
-    public Curso findByID(@PathVariable("id") Long id) {return cursoService.findById(id);}
+    @GetMapping("/cursos/{id}")
+    public Curso findById(@PathVariable("id") Long id) {return cursoService.findById(id);}
 }

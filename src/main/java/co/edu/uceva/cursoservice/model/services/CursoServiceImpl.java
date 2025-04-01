@@ -19,11 +19,6 @@ public class CursoServiceImpl implements ICursoService{
     }
 
     @Override
-    public void deleteByID(Long id) {
-        cursoRepository.deleteById(id);
-    }
-
-    @Override
     public void delete(Curso curso) {
         cursoRepository.delete(curso);
     }
