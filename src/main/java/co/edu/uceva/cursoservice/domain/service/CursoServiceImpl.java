@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CursoServiceImpl implements ICursoService{
@@ -24,14 +25,14 @@ public class CursoServiceImpl implements ICursoService{
 
     @Override
     @Transactional
-    public void delete(Curso curso) {
-        cursoRepository.delete(curso);
+    public void delete(Long id) {
+        cursoRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public Curso findById(Long id) {
-        return cursoRepository.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public Optional<Curso> findById(Long id) {
+        return cursoRepository.findById(id);
     }
 
     @Override
