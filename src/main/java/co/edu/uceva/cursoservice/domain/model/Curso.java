@@ -1,4 +1,4 @@
-package co.edu.uceva.cursoservice.model.entities;
+package co.edu.uceva.cursoservice.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,5 +36,4 @@ public class Curso {
     private String nombre;
     @NotEmpty(message = "No puede estar vacío")
     private byte numeroCreditos;
-    @NotEmpty(message = "No puede estar vacío")
 }

@@ -1,6 +1,6 @@
-package co.edu.uceva.cursoservice.model.services;
+package co.edu.uceva.cursoservice.domain.service;
 
-import co.edu.uceva.cursoservice.model.entities.Curso;
+import co.edu.uceva.cursoservice.domain.model.Curso;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

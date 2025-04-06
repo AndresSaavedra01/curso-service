@@ -1,7 +1,7 @@
-package co.edu.uceva.cursoservice.controllers;
+package co.edu.uceva.cursoservice.delivery.rest;
 
-import co.edu.uceva.cursoservice.model.entities.Curso;
-import co.edu.uceva.cursoservice.model.services.ICursoService;
+import co.edu.uceva.cursoservice.domain.model.Curso;
+import co.edu.uceva.cursoservice.domain.service.ICursoService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
