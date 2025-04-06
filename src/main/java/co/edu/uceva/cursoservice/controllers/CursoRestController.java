@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -82,8 +83,17 @@ public class CursoRestController {
      * CREAR UN NUEVO CURSO PASANDO EL OBJETO EN EL CUERPO DE LA PETICIÓN
      **/
     @PostMapping("/cursos")
-    public ResponseEntity<Map<String, Object>> save(@RequestBody Curso facultad) {
+    public ResponseEntity<Map<String, Object>> save(@RequestBody Curso facultad, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
+
+        if(result.hasErrors()){
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err ->"El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .toList();
+            response.put("errors", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
         try{
             //Guardar la facultad en la base de datos
@@ -126,8 +136,17 @@ public class CursoRestController {
      * @param curso: Objeto Curso que se va a actualizar
      */
     @PutMapping("/cursos")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody Curso curso) {
+    public ResponseEntity<Map<String, Object>> update(@RequestBody Curso curso, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
+
+        if(result.hasErrors()){
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(err ->"El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .toList();
+            response.put("errors", errors);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
 
         try{
             //Verificar si existe
