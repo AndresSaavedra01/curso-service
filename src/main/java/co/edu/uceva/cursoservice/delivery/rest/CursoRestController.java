@@ -6,6 +6,7 @@ import co.edu.uceva.cursoservice.domain.exception.PaginasSinCursos;
 import co.edu.uceva.cursoservice.domain.exception.ValidationException;
 import co.edu.uceva.cursoservice.domain.model.Curso;
 import co.edu.uceva.cursoservice.domain.service.ICursoService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +69,7 @@ public class CursoRestController {
      * CREAR UN NUEVO CURSO PASANDO EL OBJETO EN EL CUERPO DE LA PETICIÓN
      **/
     @PostMapping("/cursos")
-    public ResponseEntity<Map<String, Object>> save(@RequestBody Curso facultad, BindingResult result) {
+    public ResponseEntity<Map<String, Object>> save(@Valid  @RequestBody Curso facultad, BindingResult result) {
 
         if (result.hasErrors()) {
             throw new ValidationException(result);
@@ -100,7 +101,7 @@ public class CursoRestController {
      * @param curso: Objeto Curso que se va a actualizar
      */
     @PutMapping("/cursos")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody Curso curso, BindingResult result) {
+    public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody Curso curso, BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
