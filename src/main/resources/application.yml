@@ -51,6 +51,9 @@ server:
   port: '8082'
 
 semestre-service:
+  url: http://localhost:8084
+
+usuario-service:
   url: http://localhost:8080
 
 eureka:

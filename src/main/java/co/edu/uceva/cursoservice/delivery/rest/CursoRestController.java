@@ -1,5 +1,7 @@
 package co.edu.uceva.cursoservice.delivery.rest;
 
+import co.edu.uceva.cursoservice.UsuarioDocente.DocenteClient;
+import co.edu.uceva.cursoservice.UsuarioDocente.DocenteDTO;
 import co.edu.uceva.cursoservice.domain.exception.CursoNoEncontradoException;
 import co.edu.uceva.cursoservice.domain.exception.NoHayCursosException;
 import co.edu.uceva.cursoservice.domain.exception.PaginasSinCursos;
@@ -28,6 +30,7 @@ public class CursoRestController {
 
     private final ICursoService cursoService;
     private final SemestreClient semestreClient;
+    private final DocenteClient docenteClient;
 
     private static final String ERROR = "error";
     private static final String MENSAJE = "mensaje";
@@ -35,9 +38,10 @@ public class CursoRestController {
     private static final String CURSOS = "cursos";
 
     @Autowired
-    public CursoRestController(ICursoService cursoService, SemestreClient semestreClient) {
+    public CursoRestController(ICursoService cursoService, SemestreClient semestreClient, DocenteClient docenteClient) {
         this.cursoService = cursoService;
         this.semestreClient = semestreClient;
+        this.docenteClient = docenteClient;
     }
 
     /**
@@ -82,6 +86,7 @@ public class CursoRestController {
         Map<String, Object> response = new HashMap<>();
         Curso nuevoCurso = cursoService.save(facultad);
         comprobarSemestre(nuevoCurso.getIdSemestre());
+        comprobarDocente(nuevoCurso.getIdDocente());
         response.put(MENSAJE, "El curso se ha registrado correctamente");
         response.put(CURSO, nuevoCurso);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -112,6 +117,7 @@ public class CursoRestController {
             throw new ValidationException(result);
         }
         comprobarSemestre(curso.getIdSemestre());
+        comprobarDocente(curso.getIdDocente());
         cursoService.findById(curso.getId())
                 .orElseThrow(() -> new CursoNoEncontradoException(curso.getId()));
 
@@ -146,6 +152,17 @@ public class CursoRestController {
                 .anyMatch(s -> s.getId() == idCursoSemestre);
         if (!existe) {
             throw new RuntimeException("No hay semestre con el id: " + idCursoSemestre);
+        }
+    }
+
+    public void comprobarDocente(long idDocente) {
+        Map<String, List<DocenteDTO>> response = docenteClient.obtenerDocentes();
+        List<DocenteDTO> docentes = response.get("usuarios"); // clave correcta
+
+        boolean existe = docentes.stream()
+                .anyMatch(s -> s.getId() == idDocente);
+        if (!existe) {
+            throw new RuntimeException("No hay docente con el id: " + idDocente);
         }
     }
 
